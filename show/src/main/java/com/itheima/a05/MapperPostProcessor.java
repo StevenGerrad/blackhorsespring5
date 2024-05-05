@@ -22,6 +22,7 @@ public class MapperPostProcessor implements BeanDefinitionRegistryPostProcessor 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanFactory) throws BeansException {
         try {
+            // 扫描资源
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             Resource[] resources = resolver.getResources("classpath:com/itheima/a05/mapper/**/*.class");
             AnnotationBeanNameGenerator generator = new AnnotationBeanNameGenerator();
@@ -34,6 +35,7 @@ public class MapperPostProcessor implements BeanDefinitionRegistryPostProcessor 
                             .addConstructorArgValue(classMetadata.getClassName())
                             .setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE)
                             .getBeanDefinition();
+                    // 专门根据接口生成了一个definition，仅仅为了生成名字
                     AbstractBeanDefinition bd2 = BeanDefinitionBuilder.genericBeanDefinition(classMetadata.getClassName()).getBeanDefinition();
                     String name = generator.generateBeanName(bd2, beanFactory);
                     beanFactory.registerBeanDefinition(name, bd);

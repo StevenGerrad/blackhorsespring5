@@ -25,13 +25,16 @@ public class AtBeanPostProcessor implements BeanDefinitionRegistryPostProcessor 
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanFactory) throws BeansException {
         try {
             CachingMetadataReaderFactory factory = new CachingMetadataReaderFactory();
+            // 使用 getMetadataReader 方式来读，不走类加载，效率比反射高
             MetadataReader reader = factory.getMetadataReader(new ClassPathResource("com/itheima/a05/Config.class"));
+            // 获取被@Bean注解标注的方法
             Set<MethodMetadata> methods = reader.getAnnotationMetadata().getAnnotatedMethods(Bean.class.getName());
             for (MethodMetadata method : methods) {
                 System.out.println(method);
                 String initMethod = method.getAnnotationAttributes(Bean.class.getName()).get("initMethod").toString();
                 BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition();
                 builder.setFactoryMethodOnBean(method.getMethodName(), "config");
+                // sqlSessionFactoryBean 有参数，需要指定自动装配
                 builder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
                 if (initMethod.length() > 0) {
                     builder.setInitMethodName(initMethod);
