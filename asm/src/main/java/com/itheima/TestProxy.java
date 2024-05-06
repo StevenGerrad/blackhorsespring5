@@ -12,6 +12,7 @@ public class TestProxy {
         /*FileOutputStream os = new FileOutputStream("$Proxy0.class");
         os.write(dump, 0, dump.length);
         os.close();*/
+        // 可以发现内容和$Proxy0一样
 
         ClassLoader loader = new ClassLoader() {
             @Override

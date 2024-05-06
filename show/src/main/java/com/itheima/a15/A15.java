@@ -41,7 +41,7 @@ public class A15 {
         ProxyFactory factory = new ProxyFactory();
         factory.setTarget(target);
         factory.addAdvisor(advisor);
-        factory.setInterfaces(target.getClass().getInterfaces());
+        factory.setInterfaces(target.getClass().getInterfaces());   // 不主动设置无法判断有没有实现接口
         factory.setProxyTargetClass(false);
         Target2 proxy = (Target2) factory.getProxy();
         System.out.println(proxy.getClass());

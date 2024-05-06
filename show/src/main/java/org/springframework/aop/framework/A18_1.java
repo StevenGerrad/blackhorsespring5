@@ -41,10 +41,10 @@ public class A18_1 {
 
 
     static class MyInvocation implements MethodInvocation {
-        private Object target;  // 1
-        private Method method;
-        private Object[] args;
-        List<MethodInterceptor> methodInterceptorList; // 2
+        private Object target;  // 1 // 目标是谁
+        private Method method;  // target中的方法信息
+        private Object[] args;  // 目标方法的参数
+        List<MethodInterceptor> methodInterceptorList; // 2     // 多个环绕通知的集合
         private int count = 1; // 调用次数
 
         public MyInvocation(Object target, Method method, Object[] args, List<MethodInterceptor> methodInterceptorList) {

@@ -6,16 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="show" />
+        <module name="aspectj_02" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="asm" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="show" options="-parameters" />
+      <module name="aspectj_02" options="-parameters" />
     </option>
   </component>
 </project>

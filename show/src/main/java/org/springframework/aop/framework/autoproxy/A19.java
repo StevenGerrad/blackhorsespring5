@@ -18,12 +18,12 @@ public class A19 {
 
     @Aspect
     static class MyAspect {
-        @Before("execution(* foo(..))") // 静态通知调用，不带参数绑定，执行时不需要切点
+        @Before("execution(* foo(..))") // 静态通知调用，不带参数绑定，执行时不需要切点。性能相对较高
         public void before1() {
             System.out.println("before1");
         }
 
-        @Before("execution(* foo(..)) && args(x)") // 动态通知调用，需要参数绑定，执行时还需要切点对象
+        @Before("execution(* foo(..)) && args(x)") // 动态通知调用，需要参数绑定，执行时还需要切点对象。需要解析参数，性能相对较低
         public void before2(int x) {
             System.out.printf("before2(%d)%n", x);
         }
