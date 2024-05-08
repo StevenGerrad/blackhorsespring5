@@ -89,12 +89,12 @@ public class A21 {
                     new PathVariableMethodArgumentResolver(),
                     new RequestHeaderMethodArgumentResolver(beanFactory),
                     new ServletCookieValueMethodArgumentResolver(beanFactory),
-                    new ExpressionValueMethodArgumentResolver(beanFactory),
-                    new ServletRequestMethodArgumentResolver(),
+                    new ExpressionValueMethodArgumentResolver(beanFactory), // 解析 ${} #{}
+                    new ServletRequestMethodArgumentResolver(),     // HttpServletRequest 没加注解 根据参数类型解析
                     new ServletModelAttributeMethodProcessor(false), // 必须有 @ModelAttribute
-                    new RequestResponseBodyMethodProcessor(List.of(new MappingJackson2HttpMessageConverter())),
+                    new RequestResponseBodyMethodProcessor(List.of(new MappingJackson2HttpMessageConverter())), // 这个位置很关键
                     new ServletModelAttributeMethodProcessor(true), // 省略了 @ModelAttribute
-                    new RequestParamMethodArgumentResolver(beanFactory, true) // 省略 @RequestParam
+                    new RequestParamMethodArgumentResolver(beanFactory, true) // 省略 @RequestParam，要放到最后
             );
 
             String annotations = Arrays.stream(parameter.getParameterAnnotations()).map(a -> a.annotationType().getSimpleName()).collect(Collectors.joining());
@@ -147,18 +147,18 @@ public class A21 {
     static class Controller {
         public void test(
                 @RequestParam("name1") String name1, // name1=张三
-                String name2,                        // name2=李四
+                String name2,                        // name2=李四 （没有加注解，也会匹配）
                 @RequestParam("age") int age,        // age=18
-                @RequestParam(name = "home", defaultValue = "${JAVA_HOME}") String home1, // spring 获取数据
-                @RequestParam("file") MultipartFile file, // 上传文件
-                @PathVariable("id") int id,               //  /test/124   /test/{id}
+                @RequestParam(name = "home", defaultValue = "${JAVA_HOME}") String home1, // spring 获取数据（非请求数据）
+                @RequestParam("file") MultipartFile file, // 上传文件的数据
+                @PathVariable("id") int id,               // 路径参数 /test/124   /test/{id}
                 @RequestHeader("Content-Type") String header,
                 @CookieValue("token") String token,
                 @Value("${JAVA_HOME}") String home2, // spring 获取数据  ${} #{}
                 HttpServletRequest request,          // request, response, session ...
-                @ModelAttribute("abc") User user1,          // name=zhang&age=18
-                User user2,                          // name=zhang&age=18
-                @RequestBody User user3              // json
+                @ModelAttribute("abc") User user1,          // name=zhang&age=18 指定名字abc 防止解析模型名字user和下面的重合
+                User user2,                          // name=zhang&age=18 （也可省略ModelAttribute注解）
+                @RequestBody User user3              // json 从请求体中获取json格式数据
         ) {
         }
     }

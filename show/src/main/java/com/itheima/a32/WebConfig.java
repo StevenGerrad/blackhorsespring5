@@ -47,7 +47,6 @@ public class WebConfig {
         registrationBean.setLoadOnStartup(1);
         return registrationBean;
     }
-
     @Bean // @RequestMapping
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
         return new RequestMappingHandlerMapping();

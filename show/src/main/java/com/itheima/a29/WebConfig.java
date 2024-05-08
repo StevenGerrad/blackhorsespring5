@@ -19,6 +19,7 @@ public class WebConfig {
     static class MyControllerAdvice implements ResponseBodyAdvice<Object> {
         // 满足条件才转换
         public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+            // findAnnotation 方法不光找当前类的注解，如果这个注解又包含了其他注解，可以递归查找
             if (returnType.getMethodAnnotation(ResponseBody.class) != null ||
                 AnnotationUtils.findAnnotation(returnType.getContainingClass(), ResponseBody.class) != null) {
 //                returnType.getContainingClass().isAnnotationPresent(ResponseBody.class)) {

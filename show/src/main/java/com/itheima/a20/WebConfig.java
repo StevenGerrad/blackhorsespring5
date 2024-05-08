@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Configuration
-@ComponentScan
+@ComponentScan  // 具备组件扫描能力，没加包说明扫描组件所在的包以及子包
 @PropertySource("classpath:application.properties")
-@EnableConfigurationProperties({WebMvcProperties.class, ServerProperties.class})
+@EnableConfigurationProperties({WebMvcProperties.class, ServerProperties.class})    // 批量绑定同组配置
 public class WebConfig {
     // ⬅️内嵌 web 容器工厂
     @Bean
@@ -39,11 +39,12 @@ public class WebConfig {
         return new DispatcherServlet();
     }
 
-    // ⬅️注册 DispatcherServlet, Spring MVC 的入口
+    // ⬅️注册 DispatcherServlet, Spring MVC 的入口 （DispatcherServlet不是在Spring运行，而是在web容器运行）
     @Bean
     public DispatcherServletRegistrationBean dispatcherServletRegistrationBean(
             DispatcherServlet dispatcherServlet, WebMvcProperties webMvcProperties) {
         DispatcherServletRegistrationBean registrationBean = new DispatcherServletRegistrationBean(dispatcherServlet, "/");
+        // 如果有多个DispatcherServlet，.setLoadOnStartup()方法可设置优先级
         registrationBean.setLoadOnStartup(webMvcProperties.getServlet().getLoadOnStartup());
         return registrationBean;
     }

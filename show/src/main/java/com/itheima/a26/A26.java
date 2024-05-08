@@ -35,7 +35,7 @@ public class A26 {
 
         RequestMappingHandlerAdapter adapter = new RequestMappingHandlerAdapter();
         adapter.setApplicationContext(context);
-        adapter.afterPropertiesSet();
+        adapter.afterPropertiesSet();   // 找到所有标注ControllerAdvice的方法并记录下来
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setParameter("name", "张三");
@@ -47,6 +47,7 @@ public class A26 {
 
         ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(null, null);
 
+        // 参考笔记第25讲图1
         handlerMethod.setDataBinderFactory(factory);
         handlerMethod.setParameterNameDiscoverer(new DefaultParameterNameDiscoverer());
         handlerMethod.setHandlerMethodArgumentResolvers(getArgumentResolvers(context));
@@ -58,7 +59,8 @@ public class A26 {
         getModelFactory.setAccessible(true);
         ModelFactory modelFactory = (ModelFactory) getModelFactory.invoke(adapter, handlerMethod, factory);
 
-        // 初始化模型数据
+        // 初始化模型数据。此时ModelFactory会为ModelAndViewContainer中补充一些模型处理
+        // 优先找Controller中ModelAttribute标注的方法，其次找ControllerAdvice中用ModelAttribute标注的方法
         modelFactory.initModel(new ServletWebRequest(request), container, handlerMethod);
 
         handlerMethod.invokeAndHandle(new ServletWebRequest(request), container);

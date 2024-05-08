@@ -14,11 +14,11 @@ public class TestGenericType {
         Type type = TeacherDao.class.getGenericSuperclass();
         System.out.println(type);
 
-        if (type instanceof ParameterizedType parameterizedType) {
+        if (type instanceof ParameterizedType parameterizedType) {  // 检查是否确实带有泛型信息
             System.out.println(parameterizedType.getActualTypeArguments()[0]);
         }
 
-        // 2. spring api 1
+        // 2. spring api 1 相当于对java api做了封装
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
         Class<?> t = GenericTypeResolver.resolveTypeArgument(TeacherDao.class, BaseDao.class);
         System.out.println(t);

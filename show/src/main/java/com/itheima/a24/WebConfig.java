@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Configuration
 public class WebConfig {
 
-    @ControllerAdvice
+    @ControllerAdvice   // 对控制器提供增强
     static class MyControllerAdvice {
         @InitBinder
         public void binder3(WebDataBinder webDataBinder) {

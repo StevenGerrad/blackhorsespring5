@@ -27,10 +27,10 @@ public class TestServletDataBinderFactory {
 //        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(List.of(method), null);
         // "3. 用 ConversionService 转换"    ConversionService Formatter
 //        FormattingConversionService service = new FormattingConversionService();
-//        service.addFormatter(new MyDateFormatter("用 ConversionService 方式扩展转换功能"));
-//        ConfigurableWebBindingInitializer initializer = new ConfigurableWebBindingInitializer();
+//        service.addFormatter(new MyDateFormatter("用 ConversionService 方式扩展转换功能"));    // 添加转换器
+//        ConfigurableWebBindingInitializer initializer = new ConfigurableWebBindingInitializer();  // 包装成一个初始化器
 //        initializer.setConversionService(service);
-//        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(null, initializer);
+//        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(null, initializer); // 创建工厂
         // "4. 同时加了 @InitBinder 和 ConversionService"
 //        InvocableHandlerMethod method = new InvocableHandlerMethod(new MyController(), MyController.class.getMethod("aaa", WebDataBinder.class));
 //
@@ -41,7 +41,7 @@ public class TestServletDataBinderFactory {
 //
 //        ServletRequestDataBinderFactory factory = new ServletRequestDataBinderFactory(List.of(method), initializer);
         // "5. 使用默认 ConversionService 转换"
-        ApplicationConversionService service = new ApplicationConversionService();
+        ApplicationConversionService service = new ApplicationConversionService();      // 要配合DateTimeFormat注解
         ConfigurableWebBindingInitializer initializer = new ConfigurableWebBindingInitializer();
         initializer.setConversionService(service);
 

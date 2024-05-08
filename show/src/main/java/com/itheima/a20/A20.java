@@ -33,7 +33,7 @@ public class A20 {
             System.out.println(k + "=" + v);
         });
 
-        // 请求来了，获取控制器方法  返回处理器执行链对象
+        // 请求来了，获取控制器方法  返回处理器执行链对象（包括处理器、拦截器）
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/test4");
         request.setParameter("name", "张三");
         request.addHeader("token", "某个令牌");
@@ -44,6 +44,7 @@ public class A20 {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         // HandlerAdapter 作用: 调用控制器方法
         MyRequestMappingHandlerAdapter handlerAdapter = context.getBean(MyRequestMappingHandlerAdapter.class);
+        // 接受参数，请求对象、响应对象、HandlerMethod对象
         handlerAdapter.invokeHandlerMethod(request, response, (HandlerMethod) chain.getHandler());
 
         // 检查响应

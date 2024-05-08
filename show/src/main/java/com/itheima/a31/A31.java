@@ -21,11 +21,12 @@ public class A31 {
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
 
-//        ExceptionHandlerExceptionResolver resolver = new ExceptionHandlerExceptionResolver();
+       // ExceptionHandlerExceptionResolver resolver = new ExceptionHandlerExceptionResolver();
 //        resolver.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter()));
 //        resolver.afterPropertiesSet();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(WebConfig.class);
+        // ExceptionHandlerExceptionResolver继承InitializingBean，被容器管理Bean内部调用了afterPropertiesSet
         ExceptionHandlerExceptionResolver resolver = context.getBean(ExceptionHandlerExceptionResolver.class);
 
         HandlerMethod handlerMethod = new HandlerMethod(new Controller5(), Controller5.class.getMethod("foo"));

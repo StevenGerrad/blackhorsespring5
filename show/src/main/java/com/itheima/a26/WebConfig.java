@@ -28,7 +28,7 @@ public class WebConfig {
             return "bb";
         }
 
-        @ResponseStatus(HttpStatus.OK)
+        @ResponseStatus(HttpStatus.OK)  // 使用该注解，代码中可暂时不考虑HandlerMethodReturnValueHandlerComposite
         public ModelAndView foo(@ModelAttribute("u") User user) {
             System.out.println("foo");
             return null;

@@ -144,15 +144,17 @@ public class A27 {
             composite.handleReturnValue(returnValue, methodHandle.getReturnType(), container, webRequest);
             System.out.println(container.getModel());
             System.out.println(container.getViewName());
-            if (!container.isRequestHandled()) {
+            if (!container.isRequestHandled()) {    // 判断请求是否已经处理过了
                 renderView(context, container, webRequest); // 渲染视图
             } else {
+                // 查看MappingJackson2HttpMessageConverter的json转换效果
                 System.out.println(new String(response.getContentAsByteArray(), StandardCharsets.UTF_8));
             }
         }
     }
 
     private static void test4(AnnotationConfigApplicationContext context) throws Exception {
+        // 由 ServletModelAttributeMethodProcessor(true) 处理
         Method method = Controller.class.getMethod("test4");
         Controller controller = new Controller();
         Object returnValue = method.invoke(controller); // 获取返回值
@@ -184,7 +186,7 @@ public class A27 {
         HandlerMethodReturnValueHandlerComposite composite = getReturnValueHandler();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRequestURI("/test3");
-        UrlPathHelper.defaultInstance.resolveAndCacheLookupPath(request);
+        UrlPathHelper.defaultInstance.resolveAndCacheLookupPath(request);   // 将路径/test3存入request域，未来没有视图名就会作为默认名字
         ServletWebRequest webRequest = new ServletWebRequest(request, new MockHttpServletResponse());
         if (composite.supportsReturnType(methodHandle.getReturnType())) { // 检查是否支持此类型的返回值
             composite.handleReturnValue(returnValue, methodHandle.getReturnType(), container, webRequest);
@@ -195,6 +197,7 @@ public class A27 {
     }
 
     private static void test2(AnnotationConfigApplicationContext context) throws Exception {
+        // 由 ViewNameMethodReturnValueHandler() 处理
         Method method = Controller.class.getMethod("test2");
         Controller controller = new Controller();
         Object returnValue = method.invoke(controller); // 获取返回值
@@ -227,6 +230,7 @@ public class A27 {
             System.out.println(container.getModel());
             System.out.println(container.getViewName());
             renderView(context, container, webRequest); // 渲染视图
+            // 有了ModelAndViewContainer就知道怎么根据视图找模板页面，并从ModelAndViewContainer取出数据填充到页面，这个过程称为视图渲染
         }
     }
 
@@ -271,7 +275,7 @@ public class A27 {
         }
 
         @ModelAttribute
-//        @RequestMapping("/test3")
+//        @RequestMapping("/test3")     // 一般要加路径名，找不到视图名就会把路径名当作视图名
         public User test3() {
             log.debug("test3()");
             return new User("李四", 20);
@@ -281,6 +285,8 @@ public class A27 {
             log.debug("test4()");
             return new User("王五", 30);
         }
+
+        // 后三个方法不走视图响应流程
 
         public HttpEntity<User> test5() {
             log.debug("test5()");

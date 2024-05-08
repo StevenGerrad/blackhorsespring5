@@ -21,8 +21,8 @@ import java.util.Map;
 public class A30 {
     public static void main(String[] args) throws NoSuchMethodException {
         ExceptionHandlerExceptionResolver resolver = new ExceptionHandlerExceptionResolver();
-        resolver.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter()));
-        resolver.afterPropertiesSet();
+        resolver.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter()));  // 消息转换器
+        resolver.afterPropertiesSet();      // 添加默认参数解析器、返回值处理器
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -31,7 +31,7 @@ public class A30 {
 //        Exception e = new ArithmeticException("被零除");
 //        resolver.resolveException(request, response, handlerMethod, e);
 //        System.out.println(new String(response.getContentAsByteArray(), StandardCharsets.UTF_8));
-        // 2.测试 mav
+        // 2.测试 mav （返回ModelAndView）
 //        HandlerMethod handlerMethod = new HandlerMethod(new Controller2(), Controller2.class.getMethod("foo"));
 //        Exception e = new ArithmeticException("被零除");
 //        ModelAndView mav = resolver.resolveException(request, response, handlerMethod, e);
