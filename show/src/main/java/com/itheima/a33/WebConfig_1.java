@@ -76,7 +76,7 @@ public class WebConfig_1 {
             return null;
         }
 
-        @Override
+        @Override   // 处理304请求
         public long getLastModified(HttpServletRequest request, Object handler) {
             return -1;
         }

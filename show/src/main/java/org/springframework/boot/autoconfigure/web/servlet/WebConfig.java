@@ -44,6 +44,7 @@ public class WebConfig {
 
     @Bean
     public SimpleUrlHandlerMapping simpleUrlHandlerMapping(ApplicationContext context) {
+        // 相比之前的HandlerMapping没有afterPropertiesSet方法，不会主动收集，需要手动收集
         SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
         Map<String, ResourceHttpRequestHandler> map = context.getBeansOfType(ResourceHttpRequestHandler.class);
         handlerMapping.setUrlMap(map);
@@ -61,17 +62,18 @@ public class WebConfig {
         /r1.html
         /r2.html
 
-        /**
+        /** 静态资源匹配，匹配上面的路径
      */
 
     @Bean("/**")
     public ResourceHttpRequestHandler handler1() {
         ResourceHttpRequestHandler handler = new ResourceHttpRequestHandler();
         handler.setLocations(List.of(new ClassPathResource("static/")));
+        // 添加资源解析器
         handler.setResourceResolvers(List.of(
-                new CachingResourceResolver(new ConcurrentMapCache("cache1")),
-                new EncodedResourceResolver(),
-                new PathResourceResolver()
+                new CachingResourceResolver(new ConcurrentMapCache("cache1")),      // 具有缓存功能
+                new EncodedResourceResolver(),  // 可读取压缩资源
+                new PathResourceResolver()      // 到磁盘上读资源
         ));
         return handler;
     }

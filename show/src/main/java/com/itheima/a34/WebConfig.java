@@ -41,7 +41,7 @@ public class WebConfig {
         return new HandlerFunctionAdapter();
     }
 
-    @Bean
+    @Bean   // 函数静态导入，简洁写法
     public RouterFunction<ServerResponse> r1() {
         return route(GET("/r1"), request -> ok().body("this is r1"));
     }
