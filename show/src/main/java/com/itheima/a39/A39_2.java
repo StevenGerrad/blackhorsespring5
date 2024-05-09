@@ -32,11 +32,11 @@ public class A39_2 {
             GenericApplicationContext context = new GenericApplicationContext();
             publisher.contextPrepared(context); // 在 spring 容器创建，并调用初始化器之后，发送此事件
             publisher.contextLoaded(context); // 所有 bean definition 加载完毕
-            context.refresh();
+            context.refresh();  // 准备Spring容器，后处理器、初始化各种单例等等
             publisher.started(context); // spring 容器初始化完成(refresh 方法调用完毕)
             publisher.running(context); // spring boot 启动完毕
 
-            publisher.failed(context, new Exception("出错了")); // spring boot 启动出错
+            publisher.failed(context, new Exception("出错了")); // 出现异常也会发事件，spring boot 启动出错
         }
 
         /*

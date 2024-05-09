@@ -27,6 +27,7 @@ public class A39_1 {
         deduceFromClasspath.setAccessible(true);
         System.out.println("\t应用类型为:"+deduceFromClasspath.invoke(null));
         System.out.println("3. 演示 ApplicationContext 初始化器");
+        // 这里的参数就是刚刚创建，但是还没refresh的ApplicationContext
         spring.addInitializers(applicationContext -> {
             if (applicationContext instanceof GenericApplicationContext gac) {
                 gac.registerBean("bean3", Bean3.class);
@@ -43,7 +44,7 @@ public class A39_1 {
 
         // 创建 ApplicationContext
         // 调用初始化器 对 ApplicationContext 做扩展
-        // ApplicationContext.refresh
+        // ApplicationContext.refresh 让ApplicationContext初始化完成
         for (String name : context.getBeanDefinitionNames()) {
             System.out.println("name: " + name + " 来源：" + context.getBeanFactory().getBeanDefinition(name).getResourceDescription());
         }

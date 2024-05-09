@@ -34,11 +34,13 @@ public class TestDataSourceAuto {
 
         String packageName = TestDataSourceAuto.class.getPackageName();
         System.out.println("当前包名:" + packageName);
+        // P150 将引导类的包名记下来，将来扫描时就可确定扫描范围
         AutoConfigurationPackages.register(context.getDefaultListableBeanFactory(),
                 packageName);
 
         context.refresh();
         for (String name : context.getBeanDefinitionNames()) {
+            // 为了方便学习，过滤一大部分无关配置类
             String resourceDescription = context.getBeanDefinition(name).getResourceDescription();
             if (resourceDescription != null)
                 System.out.println(name + " 来源:" + resourceDescription);

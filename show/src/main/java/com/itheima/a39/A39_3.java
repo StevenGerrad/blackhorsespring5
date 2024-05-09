@@ -46,7 +46,7 @@ public class A39_3 {
         XmlBeanDefinitionReader reader2 = new XmlBeanDefinitionReader(beanFactory);
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(beanFactory);
 
-        reader1.register(Config.class);
+        reader1.register(Config.class); // 到这才会解析所有Bean定义并加入bean工厂
         reader2.loadBeanDefinitions(new ClassPathResource("b03.xml"));
         scanner.scan("com.itheima.a39.sub");
 

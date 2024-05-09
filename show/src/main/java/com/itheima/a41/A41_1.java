@@ -22,8 +22,8 @@ public class A41_1 {
     public static void main(String[] args) throws IOException {
         GenericApplicationContext context = new GenericApplicationContext();
         context.getDefaultListableBeanFactory().setAllowBeanDefinitionOverriding(false);
-        context.registerBean("config", Config.class);
-        context.registerBean(ConfigurationClassPostProcessor.class);
+        context.registerBean("config", Config.class);   // 添加Bean
+        context.registerBean(ConfigurationClassPostProcessor.class);    // 添加Bean工厂后处理器
         context.refresh();
 
         for (String name : context.getBeanDefinitionNames()) {

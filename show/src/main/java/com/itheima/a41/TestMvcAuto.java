@@ -36,6 +36,7 @@ public class TestMvcAuto {
         @Override
         public String[] selectImports(AnnotationMetadata importingClassMetadata) {
             return new String[]{
+                    // 配置内嵌Tomcat服务器工厂
                     ServletWebServerFactoryAutoConfiguration.class.getName(),
                     DispatcherServletAutoConfiguration.class.getName(),
                     WebMvcAutoConfiguration.class.getName(),
