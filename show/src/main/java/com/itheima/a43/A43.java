@@ -9,6 +9,7 @@ public class A43 {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(A43.class);
 
+        // 实际上取得时候是按工厂名字取，但是取出来是产品对象
         Bean1 bean1 = (Bean1) context.getBean("bean1");
         Bean1 bean2 = (Bean1) context.getBean("bean1");
         Bean1 bean3 = (Bean1) context.getBean("bean1");

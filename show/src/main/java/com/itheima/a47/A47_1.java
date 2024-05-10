@@ -33,7 +33,7 @@ public class A47_1 {
         // 3. 结果包装为 Optional<Bean2>
         DependencyDescriptor dd3 = new DependencyDescriptor(Bean1.class.getDeclaredField("bean3"), false);
         if (dd3.getDependencyType() == Optional.class) {
-            dd3.increaseNestingLevel();
+            dd3.increaseNestingLevel(); // 进入内嵌
             Object result = beanFactory.doResolveDependency(dd3, "bean1", null, null);
             System.out.println(Optional.ofNullable(result));
         }
@@ -42,6 +42,7 @@ public class A47_1 {
         DependencyDescriptor dd4 = new DependencyDescriptor(Bean1.class.getDeclaredField("bean4"), false);
         if (dd4.getDependencyType() == ObjectFactory.class) {
             dd4.increaseNestingLevel();
+            // ObjectFactory 要能推迟对象的获取
             ObjectFactory objectFactory = new ObjectFactory() {
                 @Override
                 public Object getObject() throws BeansException {
@@ -53,6 +54,7 @@ public class A47_1 {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         // 5. 对 @Lazy 的处理
         DependencyDescriptor dd5 = new DependencyDescriptor(Bean1.class.getDeclaredField("bean2"), false);
+        // 不能使用doResolveDependency而要使用代理
         ContextAnnotationAutowireCandidateResolver resolver = new ContextAnnotationAutowireCandidateResolver();
         resolver.setBeanFactory(beanFactory);
         Object proxy = resolver.getLazyResolutionProxyIfNecessary(dd5, "bean1");

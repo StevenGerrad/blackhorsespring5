@@ -83,6 +83,7 @@ public class A49 {
 
             // 收集监听器
             public void addApplicationListenerBean(String name) {
+                // 传入所有实现了ApplicationEventListener接口的Bean的名字
                 ApplicationListener listener = context.getBean(name, ApplicationListener.class);
                 System.out.println(listener);
                 // 获取该监听器支持的事件类型

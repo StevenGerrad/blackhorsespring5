@@ -26,6 +26,7 @@ public class A48_3 {
         context.close();
     }
 
+    // SmartInitializingSingleton 所有单例都创建好了后，这个接口的方法会被回调
     @Bean
     public SmartInitializingSingleton smartInitializingSingleton(ConfigurableApplicationContext context) {
         return () -> {
@@ -36,7 +37,7 @@ public class A48_3 {
                         context.addApplicationListener((event) -> {
                             System.out.println(event);
                             Class<?> eventType = method.getParameterTypes()[0];// 监听器方法需要的事件类型
-                            if (eventType.isAssignableFrom(event.getClass())) {
+                            if (eventType.isAssignableFrom(event.getClass())) { // 判断类型是否匹配
                                 try {
                                     method.invoke(bean, event);
                                 } catch (Exception e) {

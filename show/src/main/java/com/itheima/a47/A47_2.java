@@ -110,6 +110,7 @@ public class A47_2 {
         if (dd1.getDependencyType().isArray()) {
             Class<?> componentType = dd1.getDependencyType().getComponentType();
             System.out.println(componentType);
+            // 根据类型找名字并且包含所有祖先
             String[] names = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(beanFactory, componentType);
             List<Object> beans = new ArrayList<>();
             for (String name : names) {
@@ -117,6 +118,7 @@ public class A47_2 {
                 Object bean = dd1.resolveCandidate(name, componentType, beanFactory);
                 beans.add(bean);
             }
+            // Spring提供了丰富的类型转换
             Object array = beanFactory.getTypeConverter().convertIfNecessary(beans, dd1.getDependencyType());
             System.out.println(array);
         }

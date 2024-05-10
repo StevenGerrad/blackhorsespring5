@@ -30,7 +30,7 @@ public class A48_1 {
     static class MyService {
         private static final Logger log = LoggerFactory.getLogger(MyService.class);
         @Autowired
-        private ApplicationEventPublisher publisher; // applicationContext
+        private ApplicationEventPublisher publisher; // applicationContext中的一项功能
         public void doBusiness() {
             log.debug("主线业务");
             // 主线业务完成后需要做一些支线业务，下面是问题代码
